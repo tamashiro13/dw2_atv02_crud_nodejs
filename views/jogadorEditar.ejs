@@ -1,0 +1,34 @@
+<%- include ('partials/header.ejs')%>
+<%- include ('partials/navbar.ejs')%>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            Editar jogador
+        </div>
+        <div class="card-body">
+            <form action="/jogadores/alterar" method="post">
+                <label for="nome">Nome do jogador</label>
+                <input type="text" name="nome" id="nome" class="form-control" required value="<%= jogador.nome %>">
+
+                <label for="posicao">Posição do jogador</label>
+                <input type="text" name="posicao" id="posicao" class="form-control" required value="<%= jogador.posicao %>">
+
+                <label for="altura">Altura do jogador</label>
+                <input type="text" name="altura" id="altura" class="form-control" required value="<%= jogador.altura %>">
+
+                <label for="idade">Idade do jogador</label>
+                <input type="text" name="idade" id="idade" class="form-control" required value="<%= jogador.idade %>">
+
+                <input type="hidden" name="id" id="id" value="<%= jogador.id %>">
+                <br>
+                <button type="submit" class="btn btn-warning" onclick="return confirm ('Deseja mesmo alterar o jogador <%= jogador.nome %>')">Alterar</button>
+                <a href="/jogadores">
+                    <button type="button" class="btn btn-danger">Cancelar</button>
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include ('partials/footer.ejs') %>

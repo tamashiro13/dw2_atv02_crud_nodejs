@@ -1,0 +1,34 @@
+<%- include ('partials/header.ejs')%>
+<%- include ('partials/navbar.ejs')%>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            Editar ídolo
+        </div>
+        <div class="card-body">
+            <form action="/idolos/alterar" method="post">
+                <label for="nome">Nome do ídolo</label>
+                <input type="text" name="nome" id="nome" class="form-control" required value="<%= idolo.nome %>">
+
+                <label for="apelido">Apelido do ídolo</label>
+                <input type="text" name="apelido" id="apelido" class="form-control" required value="<%= idolo.apelido %>">
+
+                <label for="nascimento">Nascimento do ídolo</label>
+                <input type="text" name="nascimento" id="nascimento" class="form-control" required value="<%= idolo.nascimento %>">
+
+                <label for="jogos">Jogos do ídolo</label>
+                <input type="text" name="jogos" id="jogos" class="form-control" required value="<%= idolo.jogos %>">
+
+                <input type="hidden" name="id" id="id" value="<%= idolo.id %>">
+                <br>
+                <button type="submit" class="btn btn-warning" onclick="return confirm ('Deseja mesmo alterar o ídolo <%= idolo.nome %>')">Alterar</button>
+                <a href="/idolos">
+                    <button type="button" class="btn btn-danger">Cancelar</button>
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include ('partials/footer.ejs') %>

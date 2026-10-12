@@ -1,6 +1,32 @@
 <%- include ('partials/header.ejs') %>
     <%- include ('partials/navbar.ejs') %>
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <h1>Cadastrar jogador</h1>
+                </div>
+                <div class="card-body">
+                    <form action="/jogadores/cadastrar" method="POST">
+                        <label for="nome">Nome do jogador:</label>
+                        <input type="text" id="nome" name="nome" placeholder="Insira o nome do jogador" class="form-control" required>
 
+                        <label for="posicao">Posição do jogador:</label>
+                        <input type="text" id="posicao" name="posicao" placeholder="Insira a posição do jogador" class="form-control" required>
+
+                        <label for="altura">Altura do jogador:</label>
+                        <input type="text" id="altura" name="altura" placeholder="Insira a altura do jogador" class="form-control" required>
+
+                        <label for="idade">Idade do jogador:</label>
+                        <input type="text" id="idade" name="idade" placeholder="Insira a idade do jogador" class="form-control" required>
+                        <br>
+                        <button type="submit" class="btn btn-success">Cadastrar</button>
+                        <button type="reset" class="btn btn-danger">Limpar</button>
+                    </form>
+                    <hr>
+                </div>
+            </div>
+        </div>
+        <br>
         <div class="container">
             <div class="card">
                 <div class="card-header">
@@ -15,12 +41,13 @@
                                 <th>Posição:</th>
                                 <th>Altura:</th>
                                 <th>Idade:</th>
+                                <th style="text-align: center;" colspan="2">Ações:</th>
                             </tr>
                         </thead>
                         <tbody>
                             <% jogadores.forEach(jogador=> { %>
                                 <tr>
-                                    <td><img src="<%= jogador.foto %>" alt="<%= jogador.nome %>" width="50px"></td>
+                                    <td><img src="imgs/avatar.png" alt="<%= jogador.nome %>" width="50px"></td>
                                     <td>
                                         <%= jogador.nome %>
                                     </td>
@@ -32,6 +59,12 @@
                                     </td>
                                     <td>
                                         <%= jogador.idade %>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-warning" href="/jogadores/editar/<%= jogador.id %>">Editar</a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-danger" href="/jogadores/excluir/<%= jogador.id %>" onclick="return confirm('Deseja mesmo excluir o jogador <%= jogador.nome %>')">Excluir</a>
                                     </td>
                                 </tr>
                                 <% }) %>

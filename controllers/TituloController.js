@@ -1,27 +1,87 @@
 import express from "express";
+
+import Titulo from "../models/Titulo.js";
 const rota = express.Router();
 
 // ROTA TITULOS
 rota.get("/titulos", function (req, res) {
-  const titulos = [
-    { nome: "Brasilerão Betano", temporada: "16/17", foto:"imgs/brasileirao.webp"},
-    { nome: "Brasilerão Betano", temporada: "14/15", foto:"imgs/brasileirao.webp"},
-    { nome: "Brasilerão Betano", temporada: "10/11", foto:"imgs/brasileirao.webp"},
-    { nome: "Brasilerão Betano", temporada: "04/05", foto:"imgs/brasileirao.webp"},
-    { nome: "Brasilerão Betano", temporada: "98/99", foto:"imgs/brasileirao.webp"},
-    { nome: "Brasilerão Betano", temporada: "97/98", foto:"imgs/brasileirao.webp"},
-    { nome: "Brasilerão Betano", temporada: "89/90", foto:"imgs/brasileirao.webp"},
-    { nome: "Copa Betano do Brasil", temporada: "24/25", foto:"imgs/copa.webp"},
-    { nome: "Copa Betano do Brasil", temporada: "08/09", foto:"imgs/copa.webp"},
-    { nome: "Copa Betano do Brasil", temporada: "01/02", foto:"imgs/copa.webp"},
-    { nome: "Copa Betano do Brasil", temporada: "94/95" , foto:"imgs/copa.webp"},
-    { nome: "FIFA Club World Cup", temporada: "12/13" , foto:"imgs/worldcup.webp"},
-    { nome: "FIFA Club World Cup", temporada: "99/00", foto:"imgs/worldcup.webp"},
-    { nome: "CONMEBOL Libertadores", temporada: "11/12", foto:"imgs/libertadores.webp"},
-  ];
-  res.render("titulos", {
-    titulos: titulos,
-  });
+  Titulo.findAll()
+    .then((titulos) => {
+      res.render("titulos", {
+        titulos: titulos,
+      });
+    })
+    .catch((error) => {
+      console.log(`Ocorreu um erro ao listar os títulos. Erro: ${error}.`);
+    });
 });
 
+// ROTA DE CADASTRO DE TITULOS
+rota.post("/titulos/cadastrar", (req, res) => {
+  const nome = req.body.nome;
+  const temporada = req.body.temporada;
+
+  Titulo.create({
+    nome: nome,
+    temporada: temporada
+  })
+    .then(() => {
+      res.redirect("/titulos");
+    })
+    .catch((error) => {
+      console.log(`Ocorreu um erro ao cadastrar o título. Erro: ${error}.`);
+    });
+});
+
+// ROTA PARA EXCLUIR UM TITULOS
+rota.get("/titulos/excluir/:id", (req, res) => {
+  const id = req.params.id;
+
+  Titulo.destroy({
+    where: {
+      id: id,
+    },
+  })
+    .then(() => {
+      res.redirect("/titulos");
+    })
+    .catch((error) => {
+      console.log(`Ocorreu um erro ao excluir o título. Erro: ${error}.`);
+    });
+});
+
+// ROTA DE EDIÇÃO DE TITULO
+rota.get("/titulos/editar/:id", (req, res) => {
+  const id = req.params.id;
+  Titulo.findByPk(id)
+    .then((titulo) => {
+      res.render("tituloEditar", {
+        titulo: titulo,
+      });
+    })
+    .catch((error) => {
+      console.log(`Ocorreu um erro ao editar o título. Erro: ${error}.`);
+    });
+});
+
+// ROTA QUE ALTERA UM TITULO NO BANCO DE DADOS
+rota.post("/titulos/alterar", (req, res) => {
+  const id = req.body.id;
+  const nome = req.body.nome;
+  const temporada = req.body.temporada;
+
+  Titulo.update(
+    {
+      nome: nome,
+      temporada: temporada,
+    },
+    { where: { id: id } },
+  )
+    .then(() => {
+      res.redirect("/titulos");
+    })
+    .catch((error) => {
+      console.log(`Ocorreu um erro ao alterar o título. Erro: ${error}.`);
+    });
+});
 export default rota;

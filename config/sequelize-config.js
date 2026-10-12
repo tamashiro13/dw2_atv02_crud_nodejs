@@ -8,6 +8,7 @@ const connection = new Sequelize({
     host: "localhost",
     username: "root",
     password: "",
+    database: 'timaodex',
     timezone: "-03:00",
 });
 

@@ -1,91 +1,95 @@
 import express from "express";
+
+import Jogador from "../models/Jogador.js";
 const rota = express.Router();
 
 // ROTA JOGADORES
 rota.get("/jogadores", function (req, res) {
-  const jogadores = [
-    {
-      nome: "Hugo Souza",
-      posicao: "GK",
-      altura: "199cm",
-      idade: "27 anos",
-      foto: "imgs/hugo.webp",
-    },
-    {
-      nome: "Matheuzinho",
-      posicao: "DR",
-      altura: "171cm",
-      idade: "26 anos",
-      foto: "imgs/matheuzinho.webp",
-    },
-    {
-      nome: "Matheus Bidu",
-      posicao: "DL",
-      altura: "172cm",
-      idade: "27 anos",
-      foto: "imgs/bidu.webp",
-    },
-    {
-      nome: "Gustavo Henrique",
-      posicao: "DC",
-      altura: "195cm",
-      idade: "33 anos",
-      foto: "imgs/gh.webp",
-    },
-    {
-      nome: "Gabriel Paulista",
-      posicao: "DC",
-      altura: "187cm",
-      idade: "35 anos",
-      foto: "imgs/gp.webp",
-    },
-    {
-      nome: "Rodrigo Garro",
-      posicao: "AM",
-      altura: "174cm",
-      idade: "28 anos",
-      foto: "imgs/rg.webp",
-    },
-    {
-      nome: "André Carrillo",
-      posicao: "MC",
-      altura: "180cm",
-      idade: "35 anos",
-      foto: "imgs/ac.webp",
-    },
-    {
-      nome: "Breno Bidon",
-      posicao: "MC",
-      altura: "179cm",
-      idade: "21 anos",
-      foto: "imgs/bb.webp",
-    },
-    {
-      nome: "Raniele",
-      posicao: "DM",
-      altura: "184cm",
-      idade: "29 anos",
-      foto: "imgs/raniele.webp",
-    },
-    {
-      nome: "Memphis Depay",
-      posicao: "ST",
-      altura: "176cm",
-      idade: "32 anos",
-      foto: "imgs/md.webp",
-    },
-    {
-      nome: "Yuri Alberto",
-      posicao: "ST",
-      altura: "183cm",
-      idade: "25 anos",
-      foto: "imgs/ya.webp",
-    },
-
-  ];
-  res.render("jogadores", {
-    jogadores: jogadores,
-  });
+  Jogador.findAll()
+    .then((jogadores) => {
+      res.render("jogadores", {
+        jogadores: jogadores,
+      });
+    })
+    .catch((error) => {
+      console.log(`Ocorreu um erro ao listar os jogadores. Erro: ${error}.`);
+    });
 });
 
+// ROTA DE CADASTRO DE JOGADORES
+rota.post("/jogadores/cadastrar", (req, res) => {
+  const nome = req.body.nome;
+  const posicao = req.body.posicao;
+  const altura = req.body.altura;
+  const idade = req.body.idade;
+
+  Jogador.create({
+    nome: nome,
+    posicao: posicao,
+    altura: altura,
+    idade: idade,
+  })
+    .then(() => {
+      res.redirect("/jogadores");
+    })
+    .catch((error) => {
+      console.log(`Ocorreu um erro ao cadastrar o jogador. Erro: ${error}.`);
+    });
+});
+
+// ROTA PARA EXCLUIR UM JOGADOR
+rota.get("/jogadores/excluir/:id", (req, res) => {
+  const id = req.params.id;
+
+  Jogador.destroy({
+    where: {
+      id: id,
+    },
+  })
+    .then(() => {
+      res.redirect("/jogadores");
+    })
+    .catch((error) => {
+      console.log(`Ocorreu um erro ao excluir o jogador. Erro: ${error}.`);
+    });
+});
+
+// ROTA DE EDIÇÃO DE JOGADOR
+rota.get("/jogadores/editar/:id", (req, res) => {
+  const id = req.params.id;
+  Jogador.findByPk(id)
+    .then((jogador) => {
+      res.render("jogadorEditar", {
+        jogador: jogador,
+      });
+    })
+    .catch((error) => {
+      console.log(`Ocorreu um erro ao editar o jogador. Erro: ${error}.`);
+    });
+});
+
+// ROTA QUE ALTERA UM JOGADOR NO BANCO DE DADOS
+rota.post("/jogadores/alterar", (req, res) => {
+  const id = req.body.id;
+  const nome = req.body.nome;
+  const posicao = req.body.posicao;
+  const altura = req.body.altura;
+  const idade = req.body.idade;
+
+  Jogador.update(
+    {
+      nome: nome,
+      posicao: posicao,
+      altura: altura,
+      idade: idade,
+    },
+    { where: { id: id } },
+  )
+    .then(() => {
+      res.redirect("/jogadores");
+    })
+    .catch((error) => {
+      console.log(`Ocorreu um erro ao alterar o jogador. Erro: ${error}.`);
+    });
+});
 export default rota;

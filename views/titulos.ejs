@@ -1,6 +1,26 @@
 <%- include ('partials/header.ejs') %>
 <%- include ('partials/navbar.ejs') %>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h1>Cadastrar título</h1>
+            </div>
+            <div class="card-body">
+                <form action="/titulos/cadastrar" method="POST">
+                    <label for="nome">Nome do título:</label>
+                    <input type="text" id="nome" name="nome" placeholder="Insira o nome do título" class="form-control" required>
 
+                    <label for="temporada">Temporada do título:</label>
+                    <input type="text" id="temporada" name="temporada" placeholder="Insira a temporada do título" class="form-control" required>
+                    <br>
+                    <button type="submit" class="btn btn-success">Cadastrar</button>
+                    <button type="reset" class="btn btn-danger">Limpar</button>
+                </form>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <br>
     <div class="container">
         <div class="card">
             <div class="card-header">
@@ -13,14 +33,21 @@
                             <th></th>
                             <th>Nome:</th>
                             <th>Temporada:</th>
+                            <th style="text-align: center;" colspan="2">Ações:</th>
                         </tr>
                     </thead>
                     <tbody>
                         <% titulos.forEach(titulo => { %>
                         <tr>
-                            <td><img src="<%= titulo.foto %>" alt="<%= titulo.nome %>" width="50px"></td>
+                            <td><img src="imgs/titulo.png" alt="<%= titulo.nome %>" width="50px"></td>
                             <td><%= titulo.nome %></td>
                             <td><%= titulo.temporada %></td>
+                            <td>
+                                <a class="btn btn-warning" href="/titulos/editar/<%= titulo.id %>">Editar</a>
+                            </td>
+                            <td>
+                                <a class="btn btn-danger" href="/titulos/excluir/<%= titulo.id %>" onclick="return confirm('Deseja mesmo excluir o título <%= titulo.nome %>')">Excluir</a>
+                            </td>
                         </tr>
                         <% }) %>
                     </tbody>

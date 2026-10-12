@@ -1,398 +1,95 @@
 import express from "express";
+
+import Idolo from "../models/Idolo.js";
 const rota = express.Router();
 
-// ROTA IDOLOS
+// ROTA ÍDOLOS
 rota.get("/idolos", function (req, res) {
-  const idolos = [
-    {
-      nome: "Ado",
-      apelido: "Ado",
-      nascimento: "04/07/1946",
-      jogos: "206",
-      foto: "imgs/ado.jpg",
-    },
-    {
-      nome: "Alessandro",
-      apelido: "Guerreiro",
-      nascimento: "10/01/1979",
-      jogos: "258",
-      foto: "imgs/alessandro.jpg",
-    },
-    {
-      nome: "Ataliba",
-      apelido: "Tatá",
-      nascimento: "09/07/1956",
-      jogos: "136",
-      foto: "imgs/ataliba.jpg",
-    },
-    {
-      nome: "Baltazar",
-      apelido: "Cabecinha de Ouro",
-      nascimento: "14/01/1926",
-      jogos: "405",
-      foto: "imgs/baltazar.jpg",
-    },
-    {
-      nome: "Basílio",
-      apelido: "Pé de Anjo",
-      nascimento: "04/02/1949",
-      jogos: "253",
-      foto: "imgs/basilio.jpg",
-    },
-    {
-      nome: "Biro-Biro",
-      apelido: "Biro-Biro",
-      nascimento: "18/05/1959",
-      jogos: "590",
-      foto: "imgs/biro-biro.jpg",
-    },
-    {
-      nome: "Cabeção",
-      apelido: "Cabeção",
-      nascimento: "23/08/1930",
-      jogos: "326",
-      foto: "imgs/cabecao.jpg",
-    },
-    {
-      nome: "Carbone",
-      apelido: "Carbone",
-      nascimento: "01/11/1927",
-      jogos: "231",
-      foto: "imgs/carbone.jpg",
-    },
-    {
-      nome: "Casagrande",
-      apelido: "Casão",
-      nascimento: "15/04/1963",
-      jogos: "256",
-      foto: "imgs/casagrande.jpg",
-    },
-    {
-      nome: "Chicão",
-      apelido: "Chicão",
-      nascimento: "03/06/1981",
-      jogos: "247",
-      foto: "imgs/chicao.jpg",
-    },
-    {
-      nome: "Danilo",
-      apelido: "Zidanilo",
-      nascimento: "11/06/1979",
-      jogos: "359",
-      foto: "imgs/danilo.jpg",
-    },
-    {
-      nome: "De Maria",
-      apelido: "De Maria",
-      nascimento: "19/06/1904",
-      jogos: "118",
-      foto: "imgs/demaria.jpg",
-    },
-    {
-      nome: "Del Debbio",
-      apelido: "Del Debbio",
-      nascimento: "02/11/1904",
-      jogos: "215",
-      foto: "imgs/deldebbio.jpg",
-    },
-    {
-      nome: "Dida",
-      apelido: "Dida",
-      nascimento: "07/10/1973",
-      jogos: "94",
-      foto: "imgs/dida.jpg",
-    },
-    {
-      nome: "Dinei",
-      apelido: "Dinei",
-      nascimento: "10/09/1970",
-      jogos: "194",
-      foto: "imgs/dinei.jpg",
-    },
-    {
-      nome: "Dino Sani",
-      apelido: "Dino Sani",
-      nascimento: "13/05/1932",
-      jogos: "117",
-      foto: "imgs/dinosani.jpg",
-    },
-    {
-      nome: "Ditão",
-      apelido: "Ditão",
-      nascimento: "10/03/1938",
-      jogos: "282",
-      foto: "imgs/ditao.jpg",
-    },
-    {
-      nome: "Domingos da Guia",
-      apelido: "Divino Mestre",
-      nascimento: "19/11/1912",
-      jogos: "117",
-      foto: "imgs/domingosdaguia.jpg",
-    },
-    {
-      nome: "Edílson",
-      apelido: "Capetinha",
-      nascimento: "17/09/1971",
-      jogos: "164",
-      foto: "imgs/edilson.jpg",
-    },
-    {
-      nome: "Emerson Sheik",
-      apelido: "Sheik",
-      nascimento: "06/09/1978",
-      jogos: "196",
-      foto: "imgs/emersonsheik.jpg",
-    },
-    {
-      nome: "Ezequiel",
-      apelido: "Ezequiel",
-      nascimento: "19/05/1962",
-      jogos: "254",
-      foto: "imgs/ezequiel.jpg",
-    },
-    {
-      nome: "Flávio Minuano",
-      apelido: "Minuano",
-      nascimento: "09/06/1944",
-      jogos: "228",
-      foto: "imgs/flaviominuano.jpg",
-    },
-    {
-      nome: "Gamarra",
-      apelido: "Gamarra",
-      nascimento: "17/02/1971",
-      jogos: "80",
-      foto: "imgs/gamarra.jpg",
-    },
-    {
-      nome: "Geraldão",
-      apelido: "Geraldão",
-      nascimento: "25/07/1949",
-      jogos: "280",
-      foto: "imgs/geraldao.jpg",
-    },
-    {
-      nome: "Gilmar",
-      apelido: "Gilmar",
-      nascimento: "22/08/1930",
-      jogos: "395",
-      foto: "imgs/gilmar.jpg",
-    },
-    {
-      nome: "Idário",
-      apelido: "Sangue Azul",
-      nascimento: "07/05/1927",
-      jogos: "469",
-      foto: "imgs/idario.jpg",
-    },
-    {
-      nome: "Liedson",
-      apelido: "Liedshow",
-      nascimento: "17/12/1977",
-      jogos: "111",
-      foto: "imgs/liedson.jpg",
-    },
-    {
-      nome: "Luizão",
-      apelido: "Luizão",
-      nascimento: "14/11/1975",
-      jogos: "109",
-      foto: "imgs/luizao.jpg",
-    },
-    {
-      nome: "Luizinho",
-      apelido: "Pequeno Polegar",
-      nascimento: "07/03/1930",
-      jogos: "606",
-      foto: "imgs/luizinho.jpg",
-    },
-    {
-      nome: "Marcelinho Carioca",
-      apelido: "Pé de Anjo",
-      nascimento: "31/12/1971",
-      jogos: "433",
-      foto: "imgs/marcelinhocarioca.jpg",
-    },
-    {
-      nome: "Marcelo",
-      apelido: "Marcelo Djian",
-      nascimento: "06/11/1966",
-      jogos: "342",
-      foto: "imgs/marcelo.jpg",
-    },
-    {
-      nome: "Neco",
-      apelido: "Neco",
-      nascimento: "07/03/1895",
-      jogos: "296",
-      foto: "imgs/neco.jpg",
-    },
-    {
-      nome: "Neto",
-      apelido: "Xodó da Fiel",
-      nascimento: "09/09/1966",
-      jogos: "228",
-      foto: "imgs/neto.jpg",
-    },
-    {
-      nome: "Palhinha",
-      apelido: "Palhinha",
-      nascimento: "11/06/1950",
-      jogos: "148",
-      foto: "imgs/palhinha.jpg",
-    },
-    {
-      nome: "Paulinho",
-      apelido: "Paulinho",
-      nascimento: "25/07/1988",
-      jogos: "167",
-      foto: "imgs/paulinho.jpg",
-    },
-    {
-      nome: "Ralf",
-      apelido: "Ralf",
-      nascimento: "09/06/1984",
-      jogos: "359",
-      foto: "imgs/ralf.jpg",
-    },
-    {
-      nome: "Rincón",
-      apelido: "Rincón",
-      nascimento: "14/08/1966",
-      jogos: "158",
-      foto: "imgs/rincon.jpg",
-    },
-    {
-      nome: "Rivelino",
-      apelido: "Reizinho dos Parque",
-      nascimento: "01/01/1946",
-      jogos: "474",
-      foto: "imgs/rivelino.jpg",
-    },
-    {
-      nome: "Roberto Belangero",
-      apelido: "Professor",
-      nascimento: "28/06/1928",
-      jogos: "451",
-      foto: "imgs/robertobelangero.jpg",
-    },
-    {
-      nome: "Ronaldo Fenômeno",
-      apelido: "Fenômeno",
-      nascimento: "22/09/1976",
-      jogos: "69",
-      foto: "imgs/ronaldofenomeno.jpg",
-    },
-    {
-      nome: "Ronaldo Giovaneli",
-      apelido: "Ronadlo Giovaneli",
-      nascimento: "20/11/1967",
-      jogos: "602",
-      foto: "imgs/ronaldogiovanelli.jpg",
-    },
-    {
-      nome: "Ruço",
-      apelido: "Ruço",
-      nascimento: "03/06/1949",
-      jogos: "201",
-      foto: "imgs/ruco.jpg",
-    },
-    {
-      nome: "Rui Rei",
-      apelido: "Rui Rei",
-      nascimento: "17/01/1953",
-      jogos: "77",
-      foto: "imgs/ruirei.jpg",
-    },
-    {
-      nome: "Sócrates",
-      apelido: "Doutor",
-      nascimento: "19/02/1954",
-      jogos: "298",
-      foto: "imgs/socrates.jpg",
-    },
-    {
-      nome: "Teleco",
-      apelido: "Rei das Viradas",
-      nascimento: "12/11/1913",
-      jogos: "256",
-      foto: "imgs/teleco.jpg",
-    },
-    {
-      nome: "Tobias",
-      apelido: "Gatão",
-      nascimento: "13/05/1949",
-      jogos: "125",
-      foto: "imgs/tobias.jpg",
-    },
-    {
-      nome: "Tuffy",
-      apelido: "Satanás",
-      nascimento: "17/07/1899",
-      jogos: "71",
-      foto: "imgs/tuffy.jpg",
-    },
-    {
-      nome: "Tupãzinho",
-      apelido: "Tupãzinho",
-      nascimento: "07/07/1968",
-      jogos: "52",
-      foto: "imgs/tupazinho.jpg",
-    },
-    {
-      nome: "Vampeta",
-      apelido: "Vampeta",
-      nascimento: "13/03/1974",
-      jogos: "268",
-      foto: "imgs/vampeta.jpg",
-    },
-    {
-      nome: "Viola",
-      apelido: "Viola",
-      nascimento: "01/01/1969",
-      jogos: "283",
-      foto: "imgs/viola.jpg",
-    },
-    {
-      nome: "Wilson Mano",
-      apelido: "Coringa",
-      nascimento: "23/05/1964",
-      jogos: "405",
-      foto: "imgs/wilson_mano.jpg",
-    },
-    {
-      nome: "Wladimir",
-      apelido: "Wladimir",
-      nascimento: "28/09/1954",
-      jogos: "806",
-      foto: "imgs/wladimir.jpg",
-    },
-    {
-      nome: "Zenon",
-      apelido: "Zenon",
-      nascimento: "31/03/1954",
-      jogos: "304",
-      foto: "imgs/zenon.jpg",
-    },
-    {
-      nome: "Zé Elias",
-      apelido: "Zé da Fiel",
-      nascimento: "25/09/1976",
-      jogos: "161",
-      foto: "imgs/zeelias.jpg",
-    },
-    {
-      nome: "Zé Maria",
-      apelido: "Super Zé",
-      nascimento: "18/05/1949",
-      jogos: "598",
-      foto: "imgs/zemaria.jpg",
-    }
-  ];
-  res.render("idolos", {
-    idolos: idolos,
-  });
+  Idolo.findAll()
+    .then((idolos) => {
+      res.render("idolos", {
+        idolos: idolos,
+      });
+    })
+    .catch((error) => {
+      console.log(`Ocorreu um erro ao listar os ídolos. Erro: ${error}.`);
+    });
 });
 
+// ROTA DE CADASTRO DE IDOLOS
+rota.post("/idolos/cadastrar", (req, res) => {
+  const nome = req.body.nome;
+  const apelido = req.body.apelido;
+  const nascimento = req.body.nascimento;
+  const jogos = req.body.jogos;
+
+  Idolo.create({
+    nome: nome,
+    apelido: apelido,
+    nascimento: nascimento,
+    jogos: jogos,
+  })
+    .then(() => {
+      res.redirect("/idolos");
+    })
+    .catch((error) => {
+      console.log(`Ocorreu um erro ao cadastrar o ídolo. Erro: ${error}.`);
+    });
+});
+
+// ROTA PARA EXCLUIR UM IDOLOS
+rota.get("/idolos/excluir/:id", (req, res) => {
+  const id = req.params.id;
+
+  Idolo.destroy({
+    where: {
+      id: id,
+    },
+  })
+    .then(() => {
+      res.redirect("/idolos");
+    })
+    .catch((error) => {
+      console.log(`Ocorreu um erro ao excluir o ídolo. Erro: ${error}.`);
+    });
+});
+
+// ROTA DE EDIÇÃO DE IDOLO
+rota.get("/idolos/editar/:id", (req, res) => {
+  const id = req.params.id;
+  Idolo.findByPk(id)
+    .then((idolo) => {
+      res.render("idoloEditar", {
+        idolo: idolo,
+      });
+    })
+    .catch((error) => {
+      console.log(`Ocorreu um erro ao editar o ídolo. Erro: ${error}.`);
+    });
+});
+
+// ROTA QUE ALTERA UM IDOLO NO BANCO DE DADOS
+rota.post("/idolos/alterar", (req, res) => {
+  const id = req.body.id;
+  const nome = req.body.nome;
+  const apelido = req.body.apelido;
+  const nascimento = req.body.nascimento;
+  const jogos = req.body.jogos;
+
+  Idolo.update(
+    {
+      nome: nome,
+      apelido: apelido,
+      nascimento: nascimento,
+      jogos: jogos,
+    },
+    { where: { id: id } },
+  )
+    .then(() => {
+      res.redirect("/idolos");
+    })
+    .catch((error) => {
+      console.log(`Ocorreu um erro ao alterar o ídolo. Erro: ${error}.`);
+    });
+});
 export default rota;
